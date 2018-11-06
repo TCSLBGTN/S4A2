@@ -1,55 +1,68 @@
-//requires
-const express = require('express');
-const app = express();
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
+var express = require('express'),
+app = module.exports.app = express();
+var http = require('http');
+var bodyParser = require('body-parser');
+var mongoose = require('mongoose');
+var session = require('express-session');
+var MongoStore = require('connect-mongo')(session);
+var server = http.createServer(app);
+var io = require('socket.io').listen(server);  //pass a http.Server instance
 
-// express routing
-app.use(express.static('public'));
 
+//connect to MongoDB
+mongoose.connect('mongodb://localhost/ForAuth',{ useNewUrlParser: true });
+var db = mongoose.connection;
 
-// signaling
-io.on('connection', function (socket) {
-    console.log('a user connected');
-
-    socket.on('create or join', function (room) {
-        console.log('create or join to room ', room);
-        
-        var myRoom = io.sockets.adapter.rooms[room] || { length: 0 };
-        var numClients = myRoom.length;
-
-        console.log(room, ' has ', numClients, ' clients');
-
-        if (numClients == 0) {
-            socket.join(room);
-            socket.emit('created', room);
-        } else if (numClients == 1) {
-            socket.join(room);
-            socket.emit('joined', room);
-        } else {
-            socket.emit('full', room);
-        }
-    });
-
-    socket.on('ready', function (room){
-        socket.broadcast.to(room).emit('ready');
-    });
-
-    socket.on('candidate', function (event){
-        socket.broadcast.to(event.room).emit('candidate', event);
-    });
-
-    socket.on('offer', function(event){
-        socket.broadcast.to(event.room).emit('offer',event.sdp);
-    });
-
-    socket.on('answer', function(event){
-        socket.broadcast.to(event.room).emit('answer',event.sdp);
-    });
-
+//handle mongo error
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function () {
+  // we're connected!
 });
 
-// listener
-http.listen(3000, function () {
-    console.log('listening on *:3000');
-})
+//use sessions for tracking logins
+app.use(session({
+  secret: 'work hard',
+  resave: true,
+  saveUninitialized: false,
+  store: new MongoStore({
+    mongooseConnection: db
+  })
+}));
+
+
+// parse incoming requests
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+
+
+// serve static files from template
+app.use(express.static(__dirname + '/log'));
+
+// include routes
+var routes = require('./routes/router');
+app.use('/', routes);
+
+// catch 404 and forward to error handler
+app.use(function (req, res, next) {
+  var err = new Error('File Not Found');
+  err.status = 404;
+  next(err);
+});
+
+// error handler
+// define as the last app.use callback
+app.use(function (err, req, res, next) {
+  res.status(err.status || 500);
+  res.send(err.message);
+});
+
+
+io.on('connection', function(socket) {
+  socket.on('stream', function(image){
+    socket.broadcast.emit('stream', image);
+  });
+});
+// listen on port 3000
+server.listen(3001, function () {
+  console.log('Express app listening on port 3001');
+});
