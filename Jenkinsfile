@@ -18,7 +18,7 @@ node{
     //stage('Remove Old Containers'){
     //    sh 'sudo docker stop $(docker ps -f \"name=assignment2\" -q)'
     //    sh 'sudo docker rm $(docker ps -a -f \"name=assignment2\" -q)'
-    }
+    //}
     
     stage('Deploy New Containers'){
         sh 'sudo docker run -d -p 3001:3001 --label "group=assignment2" --add-host assignment2:35.178.203.40 techninjas4/assignment2:1.0.0'
