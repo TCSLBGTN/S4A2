@@ -15,7 +15,7 @@ node{
         sh 'sudo docker push techninjas4/assignment2:1.0.0'
     }
     
-    stage('Remove Earlier Containers'){
+    stage('Remove Old Containers'){
         sh 'sudo docker stop $(docker ps -f \"name=assignment2\" -q)'
         sh 'sudo docker rm $(docker ps -a -f \"name=assignment2\" -q)'
     }
