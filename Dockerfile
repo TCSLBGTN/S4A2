@@ -17,7 +17,7 @@ RUN npm install bcrypt
 # Bundle app source
 COPY . .
 
-CMD node server.js
+#CMD node server.js
 
 EXPOSE 3001
-#CMD [ "npm", "start" ]
+CMD [ "npm", "start" ]
