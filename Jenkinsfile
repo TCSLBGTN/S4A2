@@ -21,7 +21,9 @@ node{
     }
     
     stage('Deploy New Containers'){
-        sh 'sudo docker run -d -p 3001:3001 --label "assignment2" --add-host assignment2:35.178.203.40 techninjas4/assignment2:1.0.0'
+        sh 'sudo docker run -d -p 5001:3001 --label "assignment2" techninjas4/assignment2:1.0.0'
+        sh 'sudo docker run -d -p 5002:3001 --label "assignment2" techninjas4/assignment2:1.0.0'
+        sh 'sudo docker run -d -p 5003:3001 --label "assignment2" techninjas4/assignment2:1.0.0'
     }
     
     stage('List of Containers'){
