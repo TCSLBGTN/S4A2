@@ -16,8 +16,8 @@ node{
     }
     
     stage('Remove Old Containers'){
-        sh 'sudo docker stop $(docker ps -f \"label=assignment2\" -q)'
-        sh 'sudo docker rm $(docker ps -a -f \"label=assignment2\" -q)'
+        sh 'sudo docker stop $(sudo docker ps -f \"label=assignment2\" -q)'
+        sh 'sudo docker rm $(sudo docker ps -a -f \"label=assignment2\" -q)'
     }
     
     stage('Deploy New Containers'){
