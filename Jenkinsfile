@@ -9,7 +9,7 @@ node{
     }
     
     stage('Push Docker Image'){
-        withCredentials([string(credentialsId: 'dockerHubPasswrod', variable: 'dockerHubPassword')]) {
+        withCredentials([string(credentialsId: 'dockerHubPassword', variable: 'dockerHubPassword')]) {
             sh "sudo docker login -u techninjas4 -p ${dockerHubPassword}"
         }
         sh 'sudo docker push techninjas4/assignment2:1.0.0'
