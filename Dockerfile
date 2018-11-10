@@ -12,7 +12,7 @@ RUN npm install
 # If you are building your code for production
 # RUN npm install --only=production
 
-RUN npm install bcrypt
+#RUN npm install bcrypt
 
 # Bundle app source
 COPY . .
