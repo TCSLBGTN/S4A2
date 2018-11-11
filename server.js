@@ -10,7 +10,7 @@ var io = require('socket.io').listen(server);  //pass a http.Server instance
 
 
 //connect to MongoDB
-mongoose.connect('mongodb://35.176.153.178:27017/ForAuth',{ useNewUrlParser: true });
+mongoose.connect('mongodb://3.8.123.191:27017/ForAuth',{ useNewUrlParser: true });
 var db = mongoose.connection;
 
 //handle mongo error
