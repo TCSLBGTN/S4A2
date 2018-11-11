@@ -37,6 +37,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 // serve static files from template
 app.use(express.static(__dirname + '/log'));
+app.use(bodyParser.urlencoded({extend:true}));
+app.engine('html', require('ejs').renderFile);
+app.set('view engine', 'html');
+app.set('views',__dirname + '/log');
 
 // include routes
 var routes = require('./routes/router');

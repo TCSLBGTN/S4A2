@@ -3,6 +3,7 @@ var router = express.Router();
 var User = require('../models/user');
 var path = require('path');
 var fs = require('fs');
+var ip = require("ip");
 
 
 // GET route for reading data
@@ -79,11 +80,11 @@ router.get('/login', function (req, res, next) {
 
           if (user.emitView === 'Viewer'){
             console.log(path.join(__dirname ,"../", 'log/viewer.html'));
-            res.sendFile(path.join(__dirname ,"../", 'log/viewer.html'));
+            res.render(path.join(__dirname ,"../", 'log/viewer.html'), {username:user.username});
           }
           else{
             console.log(path.join(__dirname ,"../", 'log/emmitter.html'));
-          res.sendFile(path.join(__dirname ,"../", 'log/emmitter.html'));
+          res.render(path.join(__dirname ,"../", 'log/emmitter.html'), {username:user.username});
           }
           
         }
