@@ -41,7 +41,7 @@ node('Ubuntu'){
         //def mvnHome = tool name: 'maven-3', type: 'maven'
         //def mvnCMD = "${mvnHome}/bin/mvn"
         //sh "${mvnCMD} clean package"
-        sh "cd /home/ec2-user/eclipse-workspace/CucumberTests"
+        sh "cd /home/ajaydasari/eclipse-workspace/CucumberTests"
         sh "mvn clean install"
     }
     
