@@ -33,19 +33,19 @@ node('master'){
         sh 'sudo docker ps'
     }
     
-    //stage('SCM BDD Checkout'){
-      //  git 'https://github.com/techninjas4/assignment2-BDD'
-    //}
+    stage('SCM BDD Checkout'){
+        git 'https://github.com/techninjas4/assignment2-BDD'
+    }
     
-    //stage('Maven Build & Tests Execution'){
-      //  def mvnHome = tool name: 'maven-3', type: 'maven'
-        //def mvnCMD = "${mvnHome}/bin/mvn"
-        //sh "${mvnCMD} package"
+    stage('Maven Build & Tests Execution'){
+        def mvnHome = tool name: 'maven-3', type: 'maven'
+        def mvnCMD = "${mvnHome}/bin/mvn"
+        sh "${mvnCMD} package"
         //sh "cd /home/ajaydasari/eclipse-workspace/CucumberTests"
         //sh "mvn clean install"
-   // }
+    }
     
-    //stage('Generate Cucumber Report'){
-      //  cucumber fileIncludePattern: '**/*.json', sortingMethod: 'ALPHABETICAL'
-    //}
+    stage('Generate Cucumber Report'){
+        cucumber fileIncludePattern: '**/*.json', sortingMethod: 'ALPHABETICAL'
+    }
 }
