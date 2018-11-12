@@ -16,7 +16,7 @@ node('master'){
     }
     
     stage('Remove Old Containers'){
-        def containerIDs = "sudo docker ps -f \"label=assignment2\" -q"
+        def containerIDs = sh(script: "sudo docker ps -f \"label=assignment2\" -q", returnStdout: true).trim()
         if(!containerIDs.isEmpty()){
             sh 'sudo docker stop $(sudo docker ps -f \"label=assignment2\" -q)'
             sh 'sudo docker rm $(sudo docker ps -a -f \"label=assignment2\" -q)'
