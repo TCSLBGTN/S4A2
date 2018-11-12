@@ -33,14 +33,16 @@ node('master'){
 
 node('Ubuntu'){
     
-    stage('SCM BDD Checkout'){
-        git 'https://github.com/techninjas4/assignment2-BDD'
-    }
+    //stage('SCM BDD Checkout'){
+      //  git 'https://github.com/techninjas4/assignment2-BDD'
+    //}
     
-    stage('Maven Build'){
-        def mvnHome = tool name: 'maven-3', type: 'maven'
-        def mvnCMD = "${mvnHome}/bin/mvn"
-        sh "${mvnCMD} clean package"
+    stage('Maven Build & Execute Tests'){
+        //def mvnHome = tool name: 'maven-3', type: 'maven'
+        //def mvnCMD = "${mvnHome}/bin/mvn"
+        //sh "${mvnCMD} clean package"
+        sh "cd /home/ec2-user/eclipse-workspace/CucumberTests"
+        sh "mvn clean install"
     }
     
     stage('Generate Cucumber Report'){
