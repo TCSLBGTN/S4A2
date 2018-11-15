@@ -4,11 +4,12 @@ var User = require('../models/user');
 var path = require('path');
 var fs = require('fs');
 var ip = require("ip");
-
+var address = ip.address();
 
 // GET route for reading data
 router.get('/', function (req, res, next) {
-  return res.sendFile(path.join(__dirname + '/log/index.html'));
+  console.log ( "address");
+  return res.render(path.join(__dirname + '/log/index.html'),{addressIP:address});
 });
 
 
@@ -77,14 +78,13 @@ router.get('/login', function (req, res, next) {
           return next(err);
         } else {
           console.log(user.emitView);
-
           if (user.emitView === 'Viewer'){
             console.log(path.join(__dirname ,"../", 'log/viewer.html'));
-            res.render(path.join(__dirname ,"../", 'log/viewer.html'), {username:user.username});
+            res.render(path.join(__dirname ,"../", 'log/viewer.html'), {username:user.username,addressIP:address});
           }
           else{
             console.log(path.join(__dirname ,"../", 'log/emmitter.html'));
-          res.render(path.join(__dirname ,"../", 'log/emmitter.html'), {username:user.username});
+          res.render(path.join(__dirname ,"../", 'log/emmitter.html'), {username:user.username,addressIP:address});
           }
           
         }
@@ -105,5 +105,9 @@ router.get('/logout', function (req, res, next) {
     });
   }
 });
+
+
+
+
 
 module.exports = router;
