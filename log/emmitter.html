@@ -12,7 +12,7 @@
 </head>
 
 <body>
-    <h1>Communicating with socket .io!</h1>
+    <h1>Communicating with socket .io! Served on <%= addressIP %> </h1>
     <h1> <%= username %> Logged in as Emitter \\\\\\\ <a name="emitLogout" type="button" href="/logout">Logout</a> </h1>   
     <video src="" id="video" style="width:680px;height:320px;" autoplay="true"></video>
    <canvas style="display:none;" id="preview"></canvas>
@@ -36,11 +36,13 @@
     }
 
     function loadCam(stream){
+        alert('Camera OK');
         video.src = window.URL.createObjectURL(stream);
         logger('Camera OK');
     }
 
     function loadFail(){
+        alert('Camera load Failed');
         logger(' Camera load Failed');
     }
 
@@ -54,11 +56,12 @@
         navigator.getUserMedia = (navigator.getUserMedia || navigator.
         webkitGetUserMedia || navigator.mozGetUserMedia || navigator.
         msgGetUserMedia);
-        
+
         if (navigator.getUserMedia){
             navigator.getUserMedia ({video:true},loadCam,loadFail)
         }
     });
+        
 
     setInterval(function(){
         viewVideo(video,context);
