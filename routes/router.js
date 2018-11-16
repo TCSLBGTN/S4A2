@@ -77,7 +77,7 @@ router.get('/login', function (req, res, next) {
           err.status = 400;
           return next(err);
         } else {
-          address = req.connection.remoteAddress;
+          address = req.ip;
           console.log(user.emitView);
           if (user.emitView === 'Viewer'){
             console.log(path.join(__dirname ,"../", 'log/viewer.html'));
