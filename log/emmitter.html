@@ -60,8 +60,8 @@
         webkitGetUserMedia || navigator.mozGetUserMedia || navigator.
        msgGetUserMedia);
 
-        if (navigator.getUserMedia){
-            navigator.getUserMedia(constraints)
+        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia){
+            navigator.mediaDevices.getUserMedia(constraints)
                 .then(loadCam)
                 .catch(loadFail);
         }
