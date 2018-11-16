@@ -48,31 +48,31 @@
 
     function viewVideo(video,context){
         context.drawImage(video,50,0,context.width,context.height);
-        socket.emit('stream',canvas.toDataURL('image/png'));
+        socket.emit('stream',canvas.toDataURL('image/webp'));
 
     }
 
     $(function(){
 
-        var constraints = {audio: false, video: true};
+        var constraints = {audio: false, video: {frameRate: {ideal: 60, min:10}}};
 
-        //navigator.getUserMedia = (navigator.getUserMedia || navigator.
-        //webkitGetUserMedia || navigator.mozGetUserMedia || navigator.
-       // msgGetUserMedia);
+        navigator.getUserMedia = (navigator.getUserMedia || navigator.
+        webkitGetUserMedia || navigator.mozGetUserMedia || navigator.
+       msgGetUserMedia);
 
-        //if (navigator.getUserMedia){
-           // navigator.getUserMedia ({video:true},loadCam,loadFail)
-        //}
-
-        navigator.mediaDevices.getUserMedia(constraints)
+        if (navigator.getUserMedia){
+            navigator.getUserMedia(constraints)
                 .then(loadCam)
                 .catch(loadFail);
+        }
+
+        
     });
         
 
     setInterval(function(){
         viewVideo(video,context);
-    }, 0);
+    }, 5);
         
     </script>
 </body>
