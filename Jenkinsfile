@@ -1,4 +1,4 @@
-node('master'){
+node('DockerNode'){
     
     stage('SCM App Code Checkout'){
         git 'https://github.com/techninjas4/assignment2'
