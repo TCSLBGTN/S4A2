@@ -5,14 +5,14 @@ node('DockerNode'){
     }
     
     stage('Build Docker Image'){
-        sh 'sudo docker build -t tcslbgtechninja/S4A2:1.0.0 .'
+        sh 'sudo docker build -t tcslbgtechninja/s4a2:1.0.0 .'
     }
     
     stage('Push Docker Image'){
         withCredentials([string(credentialsId: 'dockerHubPassword', variable: 'dockerHubPassword')]) {
-            sh "sudo docker login -u techninjas4 -p ${dockerHubPassword}"
+            sh "sudo docker login -u tcslbgtechninja -p ${dockerHubPassword}"
         }
-        sh 'sudo docker push tcslbgtechninja/S4A2:1.0.0'
+        sh 'sudo docker push tcslbgtechninja/s4a2:1.0.0'
     }
     
     stage('Remove Old Containers'){
@@ -24,11 +24,11 @@ node('DockerNode'){
     }
     
     stage('Deploy New Containers'){
-        sh 'sudo docker run -d -p 5001:3001 --label "S4A2" tcslbgtechninja/S4A2:1.0.0'
-        sh 'sudo docker run -d -p 5002:3001 --label "S4A2" tcslbgtechninja/S4A2:1.0.0'
-        sh 'sudo docker run -d -p 5003:3001 --label "S4A2" tcslbgtechninja/S4A2:1.0.0'
-        sh 'sudo docker run -d -p 5004:3001 --label "S4A2" tcslbgtechninja/S4A2:1.0.0'
-        sh 'sudo docker run -d -p 5005:3001 --label "S4A2" tcslbgtechninja/S4A2:1.0.0'
+        sh 'sudo docker run -d -p 5001:3001 --label "S4A2" tcslbgtechninja/s4a2:1.0.0'
+        sh 'sudo docker run -d -p 5002:3001 --label "S4A2" tcslbgtechninja/s4a2:1.0.0'
+        sh 'sudo docker run -d -p 5003:3001 --label "S4A2" tcslbgtechninja/s4a2:1.0.0'
+        sh 'sudo docker run -d -p 5004:3001 --label "S4A2" tcslbgtechninja/s4a2:1.0.0'
+        sh 'sudo docker run -d -p 5005:3001 --label "S4A2" tcslbgtechninja/s4a2:1.0.0'
     }
     
     stage('List of Containers'){
