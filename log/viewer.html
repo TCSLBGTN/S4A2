@@ -8,20 +8,23 @@
     <link href='//fonts.googleapis.com/css?family=Jura:400,300,500,600' rel='stylesheet' type='text/css'>
     <!--//web-fonts-->
     <script src="/socket.io/socket.io.js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+
     
 </head>
 <body>
     <h1>Communicating with socket .io! Served on EC2 <%= addressIP %></h1>
     <h1> <%= username %> Logged in as viewer ~~~~~ <a name="viewlogout" type="button" href="/logout">Logout</a> </h1>   
     <img id="play">
-    <div id="looger"></div>
+    <div id="logger"></div>
     <script>
         var socket = io();
         socket.on('stream', function(image){
         var img = document.getElementById("play");
         img.src = image;
-        var log = document.getElementById("logger");
-        log.text(image);
+        //var log = document.getElementById("logger");
+        //log.text(image);
+        $("#logger").text(image);
         });
     </script>
 </body>
