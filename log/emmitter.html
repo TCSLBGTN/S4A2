@@ -14,8 +14,13 @@
 <body>
     <h1>Communicating with socket .io! Served on EC2 <%= addressIP %> </h1>
     <h1> <%= username %> Logged in as Emitter \\\\\\\ <a name="emitLogout" type="button" href="/logout">Logout</a> </h1>   
-    <video src="" id="video" style="width:680px;height:320px;" autoplay="true"></video>
-   <canvas style="display:none;" id="preview"></canvas>
+    <video src="" id="video" style="width:680px;height:320px;"></video>
+    <br />
+
+    &nbsp; <button id="play">Play/Resume</button>
+    <button id="pause">Pause</button>
+    <button id="stop">Stop</button>
+    <canvas style="display:none;" id="preview"></canvas>
    
    <script type="text/javascript">
     var canvas = document.getElementById("preview");
@@ -39,6 +44,8 @@
         alert('Camera OK ');
         video.src = window.URL.createObjectURL(stream);
         logger('Camera OK');
+        video.play();
+        disableButtons(true, false, false);
     }
 
     function loadFail(){
@@ -73,6 +80,41 @@
     setInterval(function(){
         viewVideo(video,context);
     }, 70);
+
+
+      var play = document.getElementById("play");
+      var pause = document.getElementById("pause");
+      var stop = document.getElementById("stop");
+
+      
+      
+
+      function disableButtons(disPlay, disPause, disStop) {
+        play.disabled = disPlay;
+        pause.disabled = disPause;
+        stop.disabled = disStop;
+      }
+
+      disableButtons(true, true, true);
+
+     
+
+      play.addEventListener("click", function() {
+        disableButtons(true, false, false);
+        video.play();
+      }, false);
+
+      pause.addEventListener("click", function() {
+        disableButtons(false, true, false);
+        video.pause();
+      }, false);
+
+      stop.addEventListener("click", function() {
+        disableButtons(true, true, true);
+        video.pause();
+        camera.src = "";
+      }, false);
+    
         
     </script>
 </body>
